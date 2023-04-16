@@ -1,0 +1,2 @@
+(defpackage :xfdf
+  (:use :cl))
