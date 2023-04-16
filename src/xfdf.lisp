@@ -1,6 +1,8 @@
 (in-package :xfdf)
 
 (defun write-xfdf (output-stream fields)
+  "Write an XFDF document to `output-stream` using cons cells in the `fields`
+list."
   (format output-stream "~
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <xfdf xmlns=\"http://ns.adobe.com/xfdf/\" xml:space=\"preserve\">
