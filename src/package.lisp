@@ -1,2 +1,4 @@
 (defpackage :xfdf
-  (:use :cl))
+  (:use :cl)
+
+  (:export #:write-xfdf))
