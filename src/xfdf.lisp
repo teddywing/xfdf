@@ -7,18 +7,17 @@
 	<fields>
 ")
 
-  ;; TODO
-  ; (loop do)
-  (format output-stream "		<field name=\"checkbox-on\">
-			<value>Yes</value>
+  (loop for (name . value) in fields
+        do
+        (let ((value (cond ((eq value t) "Yes")
+                           ((eq value nil) "Off")
+                           (t value))))
+          (format output-stream "		<field name=\"~A\">
+			<value>~A</value>
 		</field>
-		<field name=\"checkbox-off\">
-			<value>Off</value>
-		</field>
-		<field name=\"text\">
-			<value>123 Fake Street, Springfield</value>
-		</field>
-")
+"
+name
+value)))
 
   (format output-stream "	</fields>
 </xfdf>")

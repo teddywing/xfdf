@@ -16,7 +16,7 @@
           (with-output-to-string (xfdf-stream)
             (xfdf:write-xfdf
               xfdf-stream
-              '(("checkbox-on" . T)
+              '(("checkbox-on" . t)
                 ("checkbox-off" . nil)
                 ("text" . "123 Fake Street, Springfield"))))))
     (is (string=
