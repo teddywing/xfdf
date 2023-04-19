@@ -1,15 +1,9 @@
 (defpackage :xfdf-test
   (:use :cl
         :1am
-        :xfdf)
-
-  ; (:export #:run)
-  )
+        :xfdf))
 
 (in-package :xfdf-test)
-
-; (defun run ()
-;   (1am:run))
 
 (test generates-xfdf-xml
   (let ((xfdf-string

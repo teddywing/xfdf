@@ -13,5 +13,4 @@
 
   :perform (test-op
              (op system)
-             ; (symbol-call :xfdf-test :run)
              (symbol-call :1am :run)))
