@@ -25,3 +25,26 @@ value)))
 </xfdf>")
 
   output-stream)
+
+(defun field-xfdf (name value)
+  (field-xfdf* name value 0))
+
+(defun field-xfdf* (name value nesting-level)
+  ""
+  (let ((indent (+ 2 nesting-level)))
+    ;; TODO: Add checkbox default values.
+    (if (listp value)
+        (field-xfdf* name value (1+ nesting-level))
+
+        ;; TODO: Put checkbox stuff here.
+        (format nil "~
+~v{~A~:*~}<field name=\"~A\"
+~v{~A~:*~}	<value>~A</value>
+~v{~A~:*~}</field>
+"
+indent
+name
+indent
+value
+indent))))
+;; * (format t "~v{~A~:*~}<>~A" 5 '("Hello") "Next")
