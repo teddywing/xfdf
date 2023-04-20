@@ -23,7 +23,7 @@ list."
 
   (loop for (name . value) in fields
         do
-        (field-xfdf name value))
+        (format output-stream "~A" (field-xfdf name value)))
 
   (format output-stream "	</fields>
 </xfdf>")
@@ -37,23 +37,28 @@ list."
   ""
   (let ((indent (+ 2 nesting-level)))
     ;; TODO: Add checkbox default values.
+    (format t "debug1: n'~A' : v'~A' : n'~A'~%" name value nesting-level)
     (if (listp value)
         ;; TODO: We need to do something with value
-        (dolist (field value)
-          (let ((subname (if (listp field)
-                             (first field)
-                             field))
-                (subfield (if (listp field)
-                              (rest field)
-                              field)))
-            (field-xfdf* subname subfield (1+ nesting-level))))
+        ;; TODO: How to concat results from dolist?
+        (format nil "~{~A~}"
+         (loop for field in value
+               collect
+               (let ((subname (if (listp field)
+                                  (first field)
+                                  field))
+                     (subfield (if (listp field)
+                                   (rest field)
+                                   field)))
+                 (field-xfdf* subname subfield (1+ nesting-level)))))
 
         ;; TODO: Put checkbox stuff here.
         (let ((value (cond ((eq value t) "Yes")
                            ((eq value nil) "Off")
                            (t value))))
+          (format t "debug2: n'~A' : v'~A' : n'~A'~%" name value nesting-level)
           (format nil "~
-~v{~A~:*~}<field name=\"~A\"
+~v{~A~:*~}<field name=\"~A\">
 ~v{~A~:*~}	<value>~A</value>
 ~v{~A~:*~}</field>
 "
