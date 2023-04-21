@@ -52,16 +52,7 @@ list."
                                           (rest field)
                                           field)))
                         (field-xfdf* subname subfield (1+ nesting-level))))))
-          (format nil "~
-~v{~A~:*~}<field name=\"~A\">
-~{~A~}~v{~A~:*~}</field>
-"
-indent
-'("	")
-name
-inner-fields
-indent
-'("	")))
+          (build-xfdf-outer-field name inner-fields indent))
 
         ;; TODO: Put checkbox stuff here.
         (let ((value (pdf-checkbox-value value)))
@@ -77,6 +68,19 @@ If `value` is anything else, return its identity."
   (cond ((eq value t) "Yes")
         ((eq value nil) "Off")
         (t value)))
+
+(defun build-xfdf-outer-field (name inner-fields-str indent)
+  "Build the XFDF XML for a field containing other fields."
+  (format nil "~
+~v{~A~:*~}<field name=\"~A\">
+~{~A~}~v{~A~:*~}</field>
+"
+indent
+'("	")
+name
+inner-fields-str
+indent
+'("	")))
 
 (defun build-xfdf-field (name value indent)
   (format nil "~
