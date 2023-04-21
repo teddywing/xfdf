@@ -64,9 +64,7 @@ indent
 '("	")))
 
         ;; TODO: Put checkbox stuff here.
-        (let ((value (cond ((eq value t) "Yes")
-                           ((eq value nil) "Off")
-                           (t value))))
+        (let ((value (pdf-checkbox-value value)))
           (format nil "~
 ~v{~A~:*~}<field name=\"~A\">
 ~v{~A~:*~}	<value>~A</value>
@@ -81,3 +79,13 @@ value
 indent
 '("	"))))))
 ;; * (format t "~v{~A~:*~}<>~A" 5 '("Hello") "Next")
+
+(defun pdf-checkbox-value (value)
+  "If `value` is T or NIL, convert it to the default PDF checkbox values
+'Yes' and 'Off' respectively.
+
+If `value` is anything else, return its identity."
+
+  (cond ((eq value t) "Yes")
+        ((eq value nil) "Off")
+        (t value)))
