@@ -9,18 +9,6 @@ list."
 	<fields>
 ")
 
-;   (loop for (name . value) in fields
-;         do
-;         (let ((value (cond ((eq value t) "Yes")
-;                            ((eq value nil) "Off")
-;                            (t value))))
-;           (format output-stream "		<field name=\"~A\">
-; 			<value>~A</value>
-; 		</field>
-; "
-; name
-; value)))
-
   (loop for (name . value) in fields
         do
         (format output-stream "~A" (field-xfdf name value)))
@@ -40,16 +28,11 @@ list."
   "Build an XFDF XML string for a field. The `nesting-level` specifies the
 amount of indentation to use relative to the +field-base-indentation+."
   (let ((indent (+ +field-base-indentation+ nesting-level)))
-    ;; TODO: Add checkbox default values.
     (if (consp value)
-        ;; TODO: We need to do something with value
-        ;; TODO: How to concat results from dolist?
         (build-xfdf-nested-field name value nesting-level indent)
 
-        ;; TODO: Put checkbox stuff here.
         (let ((value (pdf-checkbox-value value)))
           (xfdf-field-string name value indent)))))
-;; * (format t "~v{~A~:*~}<>~A" 5 '("Hello") "Next")
 
 (defun build-xfdf-nested-field (name value nesting-level indent)
   "Build the XFDF XML for a field containing other fields."
