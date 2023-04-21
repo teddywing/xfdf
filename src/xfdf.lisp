@@ -71,7 +71,7 @@ If `value` is anything else, return its identity."
         ((eq value nil) "Off")
         (t value)))
 
-(defun build-xfdf-outer-field (name inner-fields-str indent)
+(defun build-xfdf-outer-field (name inner-fields-string indent)
   "Build the XFDF XML for a field containing other fields."
   (format nil "~
 ~v{~A~:*~}<field name=\"~A\">
@@ -80,7 +80,7 @@ If `value` is anything else, return its identity."
 indent
 '("	")
 name
-inner-fields-str
+inner-fields-string
 indent
 '("	")))
 
