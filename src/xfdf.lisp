@@ -83,6 +83,7 @@ indent
 '("	")))
 
 (defun build-xfdf-field (name value indent)
+  "Build the XFDF XML for a single field."
   (format nil "~
 ~v{~A~:*~}<field name=\"~A\">
 ~v{~A~:*~}	<value>~A</value>
