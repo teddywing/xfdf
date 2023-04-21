@@ -65,19 +65,7 @@ indent
 
         ;; TODO: Put checkbox stuff here.
         (let ((value (pdf-checkbox-value value)))
-          (format nil "~
-~v{~A~:*~}<field name=\"~A\">
-~v{~A~:*~}	<value>~A</value>
-~v{~A~:*~}</field>
-"
-indent
-'("	")
-name
-indent
-'("	")
-value
-indent
-'("	"))))))
+          (build-xfdf-field name value indent)))))
 ;; * (format t "~v{~A~:*~}<>~A" 5 '("Hello") "Next")
 
 (defun pdf-checkbox-value (value)
@@ -89,3 +77,18 @@ If `value` is anything else, return its identity."
   (cond ((eq value t) "Yes")
         ((eq value nil) "Off")
         (t value)))
+
+(defun build-xfdf-field (name value indent)
+  (format nil "~
+~v{~A~:*~}<field name=\"~A\">
+~v{~A~:*~}	<value>~A</value>
+~v{~A~:*~}</field>
+"
+indent
+'("	")
+name
+indent
+'("	")
+value
+indent
+'("	")))
