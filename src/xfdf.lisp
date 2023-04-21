@@ -33,10 +33,12 @@ list."
 (defconstant +field-base-indentation+ 2)
 
 (defun field-xfdf (name value)
+  "Build an XFDF XML string for a field."
   (field-xfdf* name value 0))
 
 (defun field-xfdf* (name value nesting-level)
-  ""
+  "Build an XFDF XML string for a field. The `nesting-level` specifies the
+amount of indentation to use relative to the +field-base-indentation+."
   (let ((indent (+ +field-base-indentation+ nesting-level)))
     ;; TODO: Add checkbox default values.
     (if (consp value)
