@@ -30,12 +30,14 @@ list."
 
   output-stream)
 
+(defconstant +field-base-indentation+ 2)
+
 (defun field-xfdf (name value)
   (field-xfdf* name value 0))
 
 (defun field-xfdf* (name value nesting-level)
   ""
-  (let ((indent (+ 2 nesting-level)))
+  (let ((indent (+ +field-base-indentation+ nesting-level)))
     ;; TODO: Add checkbox default values.
     (format t "debug1: n'~A' : v'~A' : n'~A'~%" name value nesting-level)
     (if (consp value)
