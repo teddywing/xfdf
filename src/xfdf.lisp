@@ -44,22 +44,26 @@ amount of indentation to use relative to the +field-base-indentation+."
     (if (consp value)
         ;; TODO: We need to do something with value
         ;; TODO: How to concat results from dolist?
-        (let ((inner-fields
-                (loop for field in value
-                      collect
-                      (let ((subname (if (listp field)
-                                         (first field)
-                                         field))
-                            (subfield (if (listp field)
-                                          (rest field)
-                                          field)))
-                        (field-xfdf* subname subfield (1+ nesting-level))))))
-          (build-xfdf-outer-field name inner-fields indent))
+        (build-xfdf-nested-field name value nesting-level indent)
 
         ;; TODO: Put checkbox stuff here.
         (let ((value (pdf-checkbox-value value)))
-          (build-xfdf-field name value indent)))))
+          (xfdf-field-string name value indent)))))
 ;; * (format t "~v{~A~:*~}<>~A" 5 '("Hello") "Next")
+
+(defun build-xfdf-nested-field (name value nesting-level indent)
+  "Build the XFDF XML for a field containing other fields."
+  (let ((inner-fields
+          (loop for field in value
+                collect
+                (let ((subname (if (listp field)
+                                   (first field)
+                                   field))
+                      (subfield (if (listp field)
+                                    (rest field)
+                                    field)))
+                  (field-xfdf* subname subfield (1+ nesting-level))))))
+    (xfdf-outer-field-string name inner-fields indent)))
 
 (defun pdf-checkbox-value (value)
   "If `value` is T or NIL, convert it to the default PDF checkbox values
@@ -71,8 +75,8 @@ If `value` is anything else, return its identity."
         ((eq value nil) "Off")
         (t value)))
 
-(defun build-xfdf-outer-field (name inner-fields-string indent)
-  "Build the XFDF XML for a field containing other fields."
+(defun xfdf-outer-field-string (name inner-fields-string indent)
+  "Build the XFDF XML string for a field containing other fields."
   (format nil "~
 ~v{~A~:*~}<field name=\"~A\">
 ~{~A~}~v{~A~:*~}</field>
@@ -84,7 +88,7 @@ inner-fields-string
 indent
 '("	")))
 
-(defun build-xfdf-field (name value indent)
+(defun xfdf-field-string (name value indent)
   "Build the XFDF XML for a single field."
   (format nil "~
 ~v{~A~:*~}<field name=\"~A\">
