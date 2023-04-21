@@ -63,6 +63,11 @@
 					<value>Simpson</value>
 				</field>
 			</field>
+			<field name=\"Page2[0]\">
+				<field name=\"f2_02[0]\">
+					<value>1234</value>
+				</field>
+			</field>
 		</field>
 		<field name=\"bottommostSubform[0]\">
 			<field name=\"Page1[0]\">

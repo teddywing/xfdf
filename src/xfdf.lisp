@@ -38,19 +38,29 @@ list."
   (let ((indent (+ 2 nesting-level)))
     ;; TODO: Add checkbox default values.
     (format t "debug1: n'~A' : v'~A' : n'~A'~%" name value nesting-level)
-    (if (listp value)
+    (if (consp value)
         ;; TODO: We need to do something with value
         ;; TODO: How to concat results from dolist?
-        (format nil "~{~A~}"
-         (loop for field in value
-               collect
-               (let ((subname (if (listp field)
-                                  (first field)
-                                  field))
-                     (subfield (if (listp field)
-                                   (rest field)
-                                   field)))
-                 (field-xfdf* subname subfield (1+ nesting-level)))))
+        (let ((inner-fields
+                (loop for field in value
+                      collect
+                      (let ((subname (if (listp field)
+                                         (first field)
+                                         field))
+                            (subfield (if (listp field)
+                                          (rest field)
+                                          field)))
+                        (field-xfdf* subname subfield (1+ nesting-level))))))
+          (format nil "~
+~v{~A~:*~}<field name=\"~A\">
+~{~A~}~v{~A~:*~}</field>
+"
+indent
+'("	")
+name
+inner-fields
+indent
+'("	")))
 
         ;; TODO: Put checkbox stuff here.
         (let ((value (cond ((eq value t) "Yes")
