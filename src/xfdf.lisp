@@ -39,7 +39,6 @@ list."
   ""
   (let ((indent (+ +field-base-indentation+ nesting-level)))
     ;; TODO: Add checkbox default values.
-    (format t "debug1: n'~A' : v'~A' : n'~A'~%" name value nesting-level)
     (if (consp value)
         ;; TODO: We need to do something with value
         ;; TODO: How to concat results from dolist?
@@ -68,7 +67,6 @@ indent
         (let ((value (cond ((eq value t) "Yes")
                            ((eq value nil) "Off")
                            (t value))))
-          (format t "debug2: n'~A' : v'~A' : n'~A'~%" name value nesting-level)
           (format nil "~
 ~v{~A~:*~}<field name=\"~A\">
 ~v{~A~:*~}	<value>~A</value>
