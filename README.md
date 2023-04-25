@@ -75,4 +75,4 @@ produces the following XML:
 
 ## Resources
 
-[XFDF reference]
+[XFDF reference](https://web.archive.org/web/20180730100811/https://www.immagic.com/eLibrary/ARCHIVES/TECH/ADOBE/A070914X.pdf)
